@@ -29,49 +29,4 @@
         </section>
     </main>
 </body>
-<script>
-    // Hent prosjekter
-async function getProjects() {
-    const response = await fetch('/api/projects');
-    const projects = await response.json();
-    displayProjects(projects);
-}
-
-// Vis prosjekter
-function displayProjects(projects) {
-    const projectList = document.getElementById('projects');
-    projectList.innerHTML = '';
-    projects.forEach(project => {
-        const li = document.createElement('li');
-        li.textContent = project.title;
-        projectList.appendChild(li);
-    });
-}
-
-// Opprett prosjekt
-async function createProject(event) {
-    event.preventDefault();
-    const form = event.target;
-    const formData = new FormData(form);
-    const projectData = Object.fromEntries(formData);
-
-    const response = await fetch('/api/projects', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(projectData),
-    });
-
-    if (response.ok) {
-        form.reset();
-        getProjects();
-    }
-}
-
-// Event listeners
-document.addEventListener('DOMContentLoaded', getProjects);
-document.getElementById('project-form').addEventListener('submit', createProject);
-</script>
-
 </html>
