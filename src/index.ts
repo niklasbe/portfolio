@@ -33,7 +33,7 @@ app.post('/api/projects', async (c) => {
   if (body.technologies) {
     technologies = (body.technologies as string).split(',').map(tech => tech.trim());
   }
-  
+
   let project: Project = {
     id: projects.length + 1,
     name: body.name as string,
