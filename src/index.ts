@@ -1,10 +1,10 @@
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { serveStatic } from "@hono/node-server/serve-static";
-import { promises } from "fs";
 
 import projects from "./projects.json";
 
+// Define Project interface
 interface Project {
   id: number,
   name: string,
@@ -12,44 +12,38 @@ interface Project {
   technologies: string[]
 };
 
-
 const app = new Hono();
 
-// Serve static files
+// Serve static files from './src/public'
 app.use('/*', serveStatic({ root: './src/public' }));
 
-app.get("/api/projects", (c) => {
-  return c.json(projects);
-})
+// GET endpoint to retrieve all projects
+app.get("/api/projects", (c) => c.json(projects));
 
+// POST endpoint to add a new project
 app.post('/api/projects', async (c) => {
-  console.log('POST /api/projects');
   const body = await c.req.json();
 
+  // Parse technologies string into array
+  const technologies = body.technologies ? (body.technologies as string).split(',').map(tech => tech.trim()) : [];
 
-  let technologies: string[] = [];
-
-  // Splits the technologies string into an array of strings
-  if (body.technologies) {
-    technologies = (body.technologies as string).split(',').map(tech => tech.trim());
-  }
-
-  let project: Project = {
+  // Create new project object
+  const project: Project = {
     id: projects.length + 1,
     name: body.name as string,
     description: body.description as string,
-    technologies: technologies as string[]
-  }
+    technologies
+  };
 
   projects.push(project);
   console.log('Project added:', project);
-  return c.redirect('/')
+  return c.redirect('/');
 });
 
-const port = 3000
-console.log(`Server is running on port ${port}`)
-
+// Start server
+const port = 3000;
+console.log(`Server is running on port ${port}`);
 serve({
   fetch: app.fetch,
   port
-})
+});

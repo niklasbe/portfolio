@@ -8,71 +8,78 @@
 
 </head>
 <body>
+    <!-- Header section -->
     <header>
         <h1>Projects Dashboard</h1>
     </header>
-    <main>
+
+    <!-- Main content -->
+    <main role="main">
+        <!-- Projects list section -->
         <section class="projects-list">
             <h2>Projects List</h2>
-            <div id="projects-container">
-                <!-- Projects will be dynamically inserted here -->
-            </div>
+            <!-- Container for dynamically loaded projects -->
+            <div id="projects-container"></div>
         </section>
+
+        <!-- Add new project form section -->
         <section class="add-project-form">
             <h2>Add New Project</h2>
             <form id="add-project-form">
                 <label for="project-name">Project Name:</label>
                 <input type="text" id="project-name" name="name" required>
-                
+
                 <label for="project-description">Description:</label>
                 <textarea id="project-description" name="description" required></textarea>
-                
+
                 <label for="project-technologies">Technologies:</label>
-                <input type="text" id="project-technologies" 
-                    placeholder="Separate technologies with commas (e.g. React, Java)"
-                    name="technologies" required>
-                
+                <input type="text" id="project-technologies" name="technologies" placeholder="Comma separated (e.g. Node, Java, PHP)" required>
+
                 <button type="submit">Add Project</button>
             </form>
         </section>
     </main>
+
     <script>
         // Fetch and display projects
         fetch('/api/projects')
-            .then(response => response.json())
-            .then(projects => {
-                const container = document.getElementById('projects-container');
-                projects.forEach(project => {
-                    const div = document.createElement('div');
-                    div.className = 'project-item';
-                    div.textContent = project.name;
-                    container.appendChild(div);
-                });
+          .then(response => response.json())
+          .then(projects => {
+            const container = document.getElementById('projects-container');
+            // Create and append a div for each project
+            projects.forEach(project => {
+              const div = document.createElement('div');
+              div.className = 'project-item';
+              div.textContent = project.name;
+              container.appendChild(div);
             });
-
+          });
+      
         // Handle form submission
         document.getElementById('add-project-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const formData = new FormData(this);
-            const projectData = Object.fromEntries(formData);
-            console.log("Sending new project data with a POST requesT: " + JSON.stringify(projectData));
-
-            fetch('/api/projects', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(projectData),
-                redirect: 'follow'
-            })
-            .then(response => {
-                if (response.redirected) {
-                    window.location.href = response.url;
-                }
-            })
-            .catch(error => console.error('Error:', error));
-            
+          e.preventDefault();
+          const formData = new FormData(this);
+          const projectData = Object.fromEntries(formData);
+          
+          console.log("Sending new project data with a POST request: " + JSON.stringify(projectData));
+          
+          // Send POST request to add new project
+          fetch('/api/projects', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(projectData),
+            redirect: 'follow'
+          })
+          .then(response => {
+            // Redirect to the response URL if the response is a redirect
+            if (response.redirected) {
+              window.location.href = response.url;
+            }
+          })
+          .catch(error => console.error('Error:', error));
         });
-    </script>
+      </script>
 </body>
 </html>
