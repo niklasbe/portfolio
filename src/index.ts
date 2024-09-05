@@ -38,7 +38,11 @@ app.post('/api/projects', async (c) => {
   projects.push(project);
   console.log('Project added:', project);
   
+ 
+  
   // Return response
+  // 201 CREATED
+  c.status(201);
   // TODO: Add error handling
   return c.json({message: 'Project added successfully', project: body});
 });

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <!-- Page container -->
+  <rect x="0" y="0" width="800" height="600" fill="#f0f0f0"/>
+  
+  <!-- Header -->
+  <rect x="0" y="0" width="800" height="60" fill="#d0d0d0"/>
+  <text x="20" y="40" font-family="Arial" font-size="24" fill="#333">Projects Dashboard</text>
+  
+  <!-- Projects List -->
+  <rect x="20" y="80" width="460" height="500" fill="#ffffff" stroke="#999" stroke-width="2"/>
+  <text x="30" y="110" font-family="Arial" font-size="18" fill="#333">Projects List</text>
+  
+  <!-- Project Items -->
+  <rect x="30" y="130" width="440" height="40" fill="#e0e0e0" stroke="#999" stroke-width="1"/>
+  <text x="40" y="155" font-family="Arial" font-size="14" fill="#333">Project 1</text>
+  
+  <rect x="30" y="180" width="440" height="40" fill="#e0e0e0" stroke="#999" stroke-width="1"/>
+  <text x="40" y="205" font-family="Arial" font-size="14" fill="#333">Project 2</text>
+  
+  <rect x="30" y="230" width="440" height="40" fill="#e0e0e0" stroke="#999" stroke-width="1"/>
+  <text x="40" y="255" font-family="Arial" font-size="14" fill="#333">Project 3</text>
+  
+  <!-- Add Project Form -->
+  <rect x="500" y="80" width="280" height="300" fill="#ffffff" stroke="#999" stroke-width="2"/>
+  <text x="510" y="110" font-family="Arial" font-size="18" fill="#333">Add New Project</text>
+  
+  <!-- Form Fields -->
+  <text x="510" y="140" font-family="Arial" font-size="14" fill="#333">Project Name:</text>
+  <rect x="510" y="150" width="260" height="30" fill="#ffffff" stroke="#999" stroke-width="1"/>
+  
+  <text x="510" y="200" font-family="Arial" font-size="14" fill="#333">Description:</text>
+  <rect x="510" y="210" width="260" height="60" fill="#ffffff" stroke="#999" stroke-width="1"/>
+  
+  <text x="510" y="290" font-family="Arial" font-size="14" fill="#333">Due Date:</text>
+  <rect x="510" y="300" width="260" height="30" fill="#ffffff" stroke="#999" stroke-width="1"/>
+  
+  <!-- Submit Button -->
+  <rect x="510" y="340" width="100" height="30" fill="#4CAF50" rx="5" ry="5"/>
+  <text x="530" y="360" font-family="Arial" font-size="14" fill="#ffffff">Add Project</text>
+</svg>
