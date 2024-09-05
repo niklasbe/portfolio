@@ -41,18 +41,23 @@
     </main>
 
     <script>
+
+        // Update the DOM with all projects data
+        function updateProjects(projects) {
+            const container = document.getElementById('projects-container');
+            projects.forEach(project => {
+              const div = document.createElement('div');
+              div.className = 'project-item';
+              div.innerHTML = project.name + ' - ' + project.description + ' - <i>' + project.technologies + '</i>';
+              container.appendChild(div);
+            });
+        }
+
         // Fetch and display projects
         fetch('/api/projects')
           .then(response => response.json())
           .then(projects => {
-            const container = document.getElementById('projects-container');
-            // Create and append a div for each project
-            projects.forEach(project => {
-              const div = document.createElement('div');
-              div.className = 'project-item';
-              div.textContent = project.name;
-              container.appendChild(div);
-            });
+            updateProjects(projects);
           });
       
         // Handle form submission
@@ -70,14 +75,17 @@
               'Content-Type': 'application/json',
             },
             body: JSON.stringify(projectData),
-            redirect: 'follow'
           })
-          .then(response => {
-            // Redirect to the response URL if the response is a redirect
-            if (response.redirected) {
-              window.location.href = response.url;
-            }
-          })
+            .then(response => response.json()
+            .then(data => {
+
+                // Update the projects list with the new project
+                const container = document.getElementById('projects-container');
+                const div = document.createElement('div');
+                div.className = 'project-item';
+                div.innerHTML = data.project.name + ' - ' + data.project.description + ' - <i>' + data.project.technologies + '</i>';
+                container.appendChild(div);
+          }))
           .catch(error => console.error('Error:', error));
         });
       </script>
