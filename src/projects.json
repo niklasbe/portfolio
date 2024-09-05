@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "name": "Project 1",
+    "description": "This is the first project",
+    "technologies": ["JavaScript", "React", "Node.js"]
+  },
+  {
+    "id": 2,
+    "name": "Project 2",
+    "description": "This is the second project",
+    "technologies": ["Python", "Django", "PostgreSQL"]
+  }
+]

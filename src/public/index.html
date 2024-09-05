@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        header {
+            background-color: #d0d0d0;
+            padding: 20px;
+        }
+        h1 {
+            margin: 0;
+        }
+        main {
+            display: flex;
+            padding: 20px;
+            gap: 20px;
+        }
+        .projects-list {
+            flex: 2;
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #999;
+        }
+        .project-item {
+            background-color: #e0e0e0;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #999;
+        }
+        .add-project-form {
+            flex: 1;
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #999;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label, input, textarea {
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Projects Dashboard</h1>
+    </header>
+    <main>
+        <section class="projects-list">
+            <h2>Projects List</h2>
+            <div id="projects-container">
+                <!-- Projects will be dynamically inserted here -->
+            </div>
+        </section>
+        <section class="add-project-form">
+            <h2>Add New Project</h2>
+            <form id="add-project-form">
+                <label for="project-name">Project Name:</label>
+                <input type="text" id="project-name" name="name" required>
+                
+                <label for="project-description">Description:</label>
+                <textarea id="project-description" name="description" required></textarea>
+                
+                <label for="project-technologies">Technologies:</label>
+                <input type="text" id="project-technologies" 
+                    placeholder="Separate technologies with commas (e.g. React, Java)"
+                    name="technologies" required>
+                
+                <button type="submit">Add Project</button>
+            </form>
+        </section>
+    </main>
+    <script>
+        // Fetch and display projects
+        fetch('/')
+            .then(response => response.json())
+            .then(projects => {
+                const container = document.getElementById('projects-container');
+                projects.forEach(project => {
+                    const div = document.createElement('div');
+                    div.className = 'project-item';
+                    div.textContent = project.name;
+                    container.appendChild(div);
+                });
+            });
+
+        // Handle form submission
+        document.getElementById('add-project-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const projectData = Object.fromEntries(formData);
+
+            fetch('/projects', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(projectData),
+            })
+            .then(response => response.json())
+            .then(newProject => {
+                // Add the new project to the list
+                const container = document.getElementById('projects-container');
+                const div = document.createElement('div');
+                div.className = 'project-item';
+                div.textContent = newProject.name;
+                container.appendChild(div);
+
+                // Clear the form
+                this.reset();
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
