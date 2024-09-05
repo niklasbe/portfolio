@@ -88,7 +88,7 @@
     </main>
     <script>
         // Fetch and display projects
-        fetch('/')
+        fetch('/api/projects')
             .then(response => response.json())
             .then(projects => {
                 const container = document.getElementById('projects-container');
@@ -105,27 +105,23 @@
             e.preventDefault();
             const formData = new FormData(this);
             const projectData = Object.fromEntries(formData);
+            console.log("Sending new project data with a POST requesT: " + JSON.stringify(projectData));
 
-            fetch('/projects', {
+            fetch('/api/projects', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(projectData),
+                redirect: 'follow'
             })
-            .then(response => response.json())
-            .then(newProject => {
-                // Add the new project to the list
-                const container = document.getElementById('projects-container');
-                const div = document.createElement('div');
-                div.className = 'project-item';
-                div.textContent = newProject.name;
-                container.appendChild(div);
-
-                // Clear the form
-                this.reset();
+            .then(response => {
+                if (response.redirected) {
+                    window.location.href = response.url;
+                }
             })
             .catch(error => console.error('Error:', error));
+            
         });
     </script>
 </body>
