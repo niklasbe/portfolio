@@ -1,12 +1,14 @@
 
 
-import { useState, type FormEvent } from 'react';
-import projects from './projects.json';
+import { useEffect, useState } from 'react';
+import projectsJson from './projects.json';
+
+
 
 
 // Define Project interface
 interface Project {
-	id: number,
+	id: string,
 	name: string,
 	description: string,
 	technologies: string[]
@@ -27,19 +29,50 @@ function Project(props: Project) {
   );
 }
 
-function NewProjectForm() {
+interface ProjectFormProps {
+  onAddProject: (project: Project) => void;
+};
+
+function ProjectForm(props: ProjectFormProps) {
   
-  const addFormSubmit = (event: FormEvent) => {
+  const [formData, setFormData] = useState({
+    projectName: '',
+    projectDescription: '',
+    projectTechnologies: ''
+  });
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = event.target;
+    setFormData(prevData => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    const form = event.currentTarget as HTMLFormElement;
-    const formData = new FormData(form);
-    const projectData = Object.fromEntries(formData);
-    console.log(formData.get("name"));
-    /*const name = form.name;
-    const description = form.description.value;
-    const technologies = form.technologies.value.split(",").map((technology: string) => technology.trim());
-    */
-    console.log(JSON.stringify(projectData));
+    
+    const technologiesArray = formData.projectTechnologies
+      .split(',')
+      .map(tech => tech.trim())
+      .filter(tech => tech !== '');
+
+    const projectData = {
+      name: formData.projectName,
+      description: formData.projectDescription,
+      id: crypto.randomUUID(),
+      technologies: technologiesArray
+    };
+
+    
+    props.onAddProject(projectData);
+
+    // Clear the form after submission
+    setFormData({
+      projectName: '',
+      projectDescription: '',
+      projectTechnologies: ''
+    });
   };
 
   return (
@@ -47,7 +80,7 @@ function NewProjectForm() {
       {/* Form to add a new project */}
       <div className="xl:w-1/4">
         <form className="bg-white shadow-md rounded-lg p-6"
-          onSubmit={addFormSubmit}
+          onSubmit={handleSubmit}
         >
           <h2 className="text-2xl font-bold text-gray-800 mb-2">Add New Project</h2>
           <div className="mb-4">
@@ -55,9 +88,11 @@ function NewProjectForm() {
               Name
             </label>
             <input
-              name="name"
+              name="projectName"
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="name"
+              id="projectName"
+              value={formData.projectName}
+              onChange={handleInputChange}
               type="text"
               placeholder="Project Name"
             />
@@ -67,9 +102,11 @@ function NewProjectForm() {
               Description
             </label>
             <textarea
-              name="description"
+              name="projectDescription"
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="description"
+              value={formData.projectDescription}
+              onChange={handleInputChange}
+              id="projectDescription"
               placeholder="Project Description"
             />
           </div>
@@ -78,9 +115,11 @@ function NewProjectForm() {
               Technologies
             </label>
             <input
-              name="technologies"
+              name="projectTechnologies"
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="technologies"
+              value={formData.projectTechnologies}
+              onChange={handleInputChange}
+              id="projectTechnologies"
               type="text"
               placeholder="Technologies (comma separated)"
             />
@@ -98,6 +137,22 @@ function NewProjectForm() {
 }
 
 function ProjectList() {
+  const [projects, setProjects] = useState<Project[]>([]);
+
+  // Load projects from JSON file
+  useEffect(() => {
+    setProjects(projectsJson);
+  }, []);
+
+  const handleAddProject = (newProjectData: Project) => {
+    setProjects(prevProjects => [
+      ...prevProjects,
+      {
+        ...newProjectData
+      }]
+    );
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">My Projects</h1>
@@ -107,7 +162,7 @@ function ProjectList() {
             <Project key={project.id} {...project} />
           ))}
         </div>
-        <NewProjectForm />
+        <ProjectForm onAddProject={handleAddProject}/>
       </div>
       </div>
   );
