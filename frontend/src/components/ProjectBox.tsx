@@ -1,4 +1,4 @@
-import { Project } from '../types';
+import { Project } from "@shared/types";
 
 function ProjectBox(props: Project) {
     return (

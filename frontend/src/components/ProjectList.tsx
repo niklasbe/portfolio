@@ -1,9 +1,9 @@
 
 import { useState, useEffect } from 'react';
-import { Project } from '../types';
 import ProjectBox from './ProjectBox';
 import ProjectForm from './ProjectListForm';
 
+import { Project } from "@shared/types";
 
 
 type ProjectListProps = {

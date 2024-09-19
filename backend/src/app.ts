@@ -1,15 +1,9 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors"
 
+import { Project } from "@shared/types";
 import projects from "./projects.json";
 
-// Define Project interface
-interface Project {
-	id: number,
-	name: string,
-	description: string,
-	technologies: string[]
-};
 
 const app = new Hono();
 
@@ -30,8 +24,9 @@ app.post('/api/projects', async (c) => {
 
 	// Create new project object
 	const project: Project = {
-		id: projects.length + 1,
-		name: body.name as string,
+		id: crypto.randomUUID(),
+		title: body.name as string,
+		createdAt: new Date().toISOString(),
 		description: body.description as string,
 		technologies
 	};
