@@ -1,10 +1,6 @@
-# Portfolio
+# Backend
 
-### Simple portfolio website for ITF31619-1
-
-
-![Screenshot](./src/public/screenshot.png)
-
+Projects load from `src/projects.json` at launch. Edits to the projects array are stored in memory.
 
 ## How to run
 
