@@ -8,7 +8,7 @@ function App() {
 	const email = "email here";
 
 	return (
-		<div>
+		<div className='bg-zinc-900 h-screen'>
 
 			<ProjectList projectList={projectsJson} />
 			<ResourceBox email={email} />
