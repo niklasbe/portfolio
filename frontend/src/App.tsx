@@ -1,6 +1,5 @@
 import ProjectList from './components/ProjectList';
 import ResourceBox from './components/ResourceBox';
-import projectsJson from './projects.json';
 
 
 
@@ -10,7 +9,7 @@ function App() {
 	return (
 		<div className='bg-zinc-900 h-screen'>
 
-			<ProjectList projectList={projectsJson} />
+			<ProjectList />
 			<ResourceBox email={email} />
 		</div>
 	)

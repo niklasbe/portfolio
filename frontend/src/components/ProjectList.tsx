@@ -4,29 +4,44 @@ import ProjectBox from './ProjectBox';
 import ProjectForm from './ProjectListForm';
 
 import { Project } from "@shared/types";
+import { ProjectFormData } from './ProjectListForm';
 
 
-type ProjectListProps = {
-    projectList: Project[];
-};
 
 
-const ProjectList = ({ projectList }: ProjectListProps) => {
+const ProjectList = () => {
     const [projects, setProjects] = useState<Project[]>([]);
 
-    // Load projects from JSON file
-
     useEffect(() => {
-        setProjects(projectList);
-    }, [projectList]);
+        fetch('http://localhost:3000/api/projects')
+            .then(res => res.json())
+            .then(data => {
+                setProjects(data);
+            });
+    }, []);
 
-    const handleAddProject = (newProjectData: Project) => {
-        setProjects(prevProjects => [
-            ...prevProjects,
-            {
-                ...newProjectData
-            }]
-        );
+    const handleAddProject = (newProjectData: ProjectFormData) => {
+        // Send a POST request to the server
+        fetch('http://localhost:3000/api/projects', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newProjectData)
+        })
+            .then(res => {
+                // Check if the response is successful
+                if (!res.ok) {
+                    throw new Error('Failed to add project');
+                }
+                return res.json();
+            })
+            .then(data => {
+                setProjects(prevProjects => [
+                    ...prevProjects,
+                    data.project
+                ]);
+            });
     }
     return (
         <div className="container mx-auto px-4 py-8">

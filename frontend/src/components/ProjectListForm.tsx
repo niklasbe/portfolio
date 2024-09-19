@@ -1,23 +1,30 @@
 
 import React, { useState } from 'react';
-import { Project } from '../types';
+
+export type ProjectFormData = {
+    title: string;
+    description: string;
+    technologies: string;
+};
 
 type ProjectFormProps = {
-    onAddProject: (project: Project) => void;
+    onAddProject: (project: ProjectFormData) => void;
 };
 
 function ProjectForm({ onAddProject }: ProjectFormProps) {
 
-    const [formData, setFormData] = useState({
-        projectName: '',
-        projectDescription: '',
-        projectTechnologies: ''
+    const [formData, setFormData] = useState<ProjectFormData>({
+        title: '',
+        description: '',
+        technologies: ''
     });
+
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = event.target;
-        setFormData(prevData => ({
-            ...prevData,
+
+        setFormData(prevState => ({
+            ...prevState,
             [name]: value
         }));
     };
@@ -25,19 +32,11 @@ function ProjectForm({ onAddProject }: ProjectFormProps) {
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
 
-        // Split the technologies string into an array
-        const technologiesArray = formData.projectTechnologies
-            .split(',')
-            .map(tech => tech.trim())
-            .filter(tech => tech !== '');
-
         // Create a new project object
-        const projectData: Project = {
-            title: formData.projectName,
-            description: formData.projectDescription,
-            createdAt: new Date().toISOString(),
-            id: crypto.randomUUID(),
-            technologies: technologiesArray
+        const projectData: ProjectFormData = {
+            title: formData.title,
+            description: formData?.description,
+            technologies: formData?.technologies
         };
 
         // Call the onAddProject function from the parent component
@@ -45,9 +44,9 @@ function ProjectForm({ onAddProject }: ProjectFormProps) {
 
         // Clear the form after submission
         setFormData({
-            projectName: '',
-            projectDescription: '',
-            projectTechnologies: ''
+            title: '',
+            description: '',
+            technologies: ''
         });
 
         console.log('Project added:', projectData);
@@ -60,14 +59,14 @@ function ProjectForm({ onAddProject }: ProjectFormProps) {
                 <form className="bg-zinc-800 shadow-md rounded-lg p-6" onSubmit={handleSubmit}>
                     <h2 className="text-2xl font-bold text-gray-50 mb-4">Add New Project</h2>
                     <div className="mb-4">
-                        <label className="block text-gray-200 text-sm font-bold mb-2" htmlFor="projectName">
+                        <label className="block text-gray-200 text-sm font-bold mb-2" htmlFor="form-title">
                             Name
                         </label>
                         <input
-                            name="projectName"
+                            name="title"
                             className="shadow appearance-none border border-gray-700 rounded w-full py-2 px-3 bg-zinc-700 text-gray-200 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
-                            id="projectName"
-                            value={formData.projectName}
+                            id="form-title"
+                            value={formData.title}
                             onChange={handleInputChange}
                             type="text"
                             placeholder="Project Name"
@@ -75,29 +74,29 @@ function ProjectForm({ onAddProject }: ProjectFormProps) {
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-gray-200 text-sm font-bold mb-2" htmlFor="projectDescription">
+                        <label className="block text-gray-200 text-sm font-bold mb-2" htmlFor="form-description">
                             Description
                         </label>
                         <textarea
-                            name="projectDescription"
+                            name="description"
                             className="shadow appearance-none border border-gray-700 rounded w-full py-2 px-3 bg-zinc-700 text-gray-200 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
-                            value={formData.projectDescription}
+                            value={formData.description}
                             onChange={handleInputChange}
-                            id="projectDescription"
+                            id="form-description"
                             placeholder="Project Description"
                             required
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-gray-200 text-sm font-bold mb-2" htmlFor="projectTechnologies">
+                        <label className="block text-gray-200 text-sm font-bold mb-2" htmlFor="form-technologies">
                             Technologies
                         </label>
                         <input
-                            name="projectTechnologies"
+                            name="technologies"
                             className="shadow appearance-none border border-gray-700 rounded w-full py-2 px-3 bg-zinc-700 text-gray-200 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
-                            value={formData.projectTechnologies}
+                            value={formData.technologies}
                             onChange={handleInputChange}
-                            id="projectTechnologies"
+                            id="form-technologies"
                             type="text"
                             placeholder="Technologies (comma separated)"
                             required
