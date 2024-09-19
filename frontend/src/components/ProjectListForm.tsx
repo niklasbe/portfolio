@@ -20,6 +20,10 @@ function ProjectForm({ onAddProject }: ProjectFormProps) {
     });
 
 
+    /**
+     * Updates the local state for each input field.
+     * @see {ProjectFormData}
+     */
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = event.target;
 
