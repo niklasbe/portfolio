@@ -2,11 +2,11 @@
 import React, { useState } from 'react';
 import { Project } from '../types';
 
-interface ProjectFormProps {
+type ProjectFormProps = {
     onAddProject: (project: Project) => void;
 };
 
-function ProjectForm(props: ProjectFormProps) {
+function ProjectForm({ onAddProject }: ProjectFormProps) {
 
     const [formData, setFormData] = useState({
         projectName: '',
@@ -25,11 +25,13 @@ function ProjectForm(props: ProjectFormProps) {
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
 
+        // Split the technologies string into an array
         const technologiesArray = formData.projectTechnologies
             .split(',')
             .map(tech => tech.trim())
             .filter(tech => tech !== '');
 
+        // Create a new project object
         const projectData = {
             name: formData.projectName,
             description: formData.projectDescription,
@@ -37,8 +39,8 @@ function ProjectForm(props: ProjectFormProps) {
             technologies: technologiesArray
         };
 
-
-        props.onAddProject(projectData);
+        // Call the onAddProject function from the parent component
+        onAddProject(projectData);
 
         // Clear the form after submission
         setFormData({
