@@ -48,8 +48,6 @@ function ProjectForm({ onAddProject }: ProjectFormProps) {
             description: '',
             technologies: ''
         });
-
-        console.log('Project added:', projectData);
     };
 
     return (

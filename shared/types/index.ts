@@ -28,11 +28,11 @@ export type ProjectFormData = {
 };
 
 /**
- * API response data.
+ * API response data from the POST request.
  * @param {string} message - Response message
  * @param {Project} project - Project data
  */
-export type ApiResponse = {
+export type ApiResponsePOST = {
     message: string;
     project: Project;
 }

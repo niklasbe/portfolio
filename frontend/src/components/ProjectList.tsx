@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import ProjectBox from './ProjectBox';
 import ProjectForm from './ProjectListForm';
 
-import { Project } from "@shared/types";
+import { Project, ApiResponsePOST } from "@shared/types";
 import { ProjectFormData } from './ProjectListForm';
 
 
@@ -12,6 +12,7 @@ import { ProjectFormData } from './ProjectListForm';
 const ProjectList = () => {
     const [projects, setProjects] = useState<Project[]>([]);
 
+    // Fetch all projects from the server
     useEffect(() => {
         fetch('http://localhost:3000/api/projects')
             .then(res => res.json())
@@ -36,11 +37,14 @@ const ProjectList = () => {
                 }
                 return res.json();
             })
-            .then(data => {
+            .then((data: ApiResponsePOST) => {
+                // Update the projects state with the new project
                 setProjects(prevProjects => [
                     ...prevProjects,
                     data.project
                 ]);
+
+                console.log(data);
             });
     }
     return (
