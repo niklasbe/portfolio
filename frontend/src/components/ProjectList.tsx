@@ -21,32 +21,34 @@ const ProjectList = () => {
             });
     }, []);
 
-    const handleAddProject = (newProjectData: ProjectFormData) => {
-        // Send a POST request to the server
-        fetch('http://localhost:3000/api/projects', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(newProjectData)
-        })
-            .then(res => {
-                // Check if the response is successful
-                if (!res.ok) {
-                    throw new Error('Failed to add project');
-                }
-                return res.json();
-            })
-            .then((data: ApiResponsePOST) => {
-                // Update the projects state with the new project
-                setProjects(prevProjects => [
-                    ...prevProjects,
-                    data.project
-                ]);
-
-                console.log(data);
+    const handleFetch = async (newProjectData: ProjectFormData) => {
+        try {
+            const response = await fetch('http://localhost:3000/api/projects', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newProjectData)
             });
-    }
+
+            const data: ApiResponsePOST = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message);
+            }
+
+            console.log(data);
+
+
+            setProjects(prevProjects => [
+                ...prevProjects,
+                data.project
+            ]);
+
+        } catch (error) {
+            console.error(error);
+        }
+    };
     return (
         <div className="container mx-auto px-4 py-8">
             <h1 className="text-3xl font-bold text-gray-50 mb-8">My Projects</h1>
@@ -57,7 +59,7 @@ const ProjectList = () => {
                     ))}
                 </div>
                 {
-                    <ProjectForm onAddProject={handleAddProject} />
+                    <ProjectForm onAddProject={handleFetch} />
                 }
             </div>
         </div>
