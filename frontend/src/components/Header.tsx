@@ -87,6 +87,8 @@ function Header(props: HeaderProps) {
                     <p className="text-xl font-semibold text-gray-50">{props.name}</p>
                     <p className="text-gray-50">{props.degree}</p>
                     <p className="text-gray-50">{props.email}</p>
+                    <p className="text-gray-50">{props.points} points</p>
+
                 </div>
 
                 <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8">

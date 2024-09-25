@@ -3,7 +3,7 @@ import ResourceBox from './components/ResourceBox';
 import Header from './components/Header';
 
 const student = {
-	name: "First Last",
+	name: "Firstname Lastname",
 	degree: "Bachelor IT",
 	points: 180,
 	email: "email@here",
@@ -25,7 +25,7 @@ function App() {
 		<div className='bg-zinc-900 min-h-screen'>
 			<Header {...student} />
 			<ProjectList />
-			<ResourceBox email={student.email} />
+			<ResourceBox />
 		</div>
 	)
 }

@@ -1,6 +1,7 @@
 # Portfolio
 
-### Simple portfolio website for ITF31619-1
+### Simple portfolio website for ITF31619
+![website](website.png)
 
 ## How to run
 

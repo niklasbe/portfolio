@@ -1,7 +1,7 @@
 
 
 
-function ResourceBox({ email }: { email: string }) {
+function ResourceBox() {
     return (
         <div>
             <div className="container mx-auto px-4 py-8">
@@ -10,11 +10,6 @@ function ResourceBox({ email }: { email: string }) {
                     <a href="get.png" className="text-blue-500 content-center hover:text-blue-700" target="__blank">Get</a>
 
                     <a href="post.png" className="text-blue-500 content-center hover:text-blue-700" target="__blank">Post</a>
-
-                    <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                        onClick={() => alert(email)}>
-                        Contact
-                    </button>
                 </div>
             </div>
         </div>
