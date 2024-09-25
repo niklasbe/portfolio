@@ -7,8 +7,6 @@ import { Project, ApiResponsePOST } from "@shared/types";
 import { ProjectFormData } from './ProjectListForm';
 
 
-
-
 const ProjectList = () => {
     const [projects, setProjects] = useState<Project[]>([]);
 
@@ -20,6 +18,28 @@ const ProjectList = () => {
                 setProjects(data);
             });
     }, []);
+
+    const onDelete = async (id: string) => {
+        // DELETE request to the server
+        try {
+            const response = await fetch(`http://localhost:3000/api/projects/${id}`, {
+                method: 'DELETE'
+            });
+
+            const data = await response.json();
+
+            // If the response is not OK, show an alert with the error message
+            if (!response.ok) {
+                alert(data.message);
+                throw new Error(data.message);
+            }
+            // If the response is OK, remove the project from the state
+            setProjects(prevProjects => prevProjects.filter(project => project.id !== id));
+
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     const handlePOSTRequest = async (newProjectData: ProjectFormData) => {
         try {
@@ -55,7 +75,7 @@ const ProjectList = () => {
             <div className="flex flex-col xl:flex-row gap-6">
                 <div className="flex-grow grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {projects.map(project => (
-                        <ProjectBox key={project.id} {...project} />
+                        <ProjectBox key={project.id} project={project} onDelete={onDelete} />
                     ))}
                 </div>
                 {

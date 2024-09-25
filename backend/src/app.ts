@@ -18,6 +18,24 @@ app.get("/", (c) => c.text("Hello, World!"));
 // GET endpoint to retrieve all projects
 app.get("/api/projects", (c) => c.json(projects));
 
+// DELETE endpoint to delete a project by ID
+app.delete("/api/projects/:id", (c) => {
+	const id: string = c.req.param('id');
+	const index = projects.findIndex(project => project.id === id);
+
+	if (index === -1) {
+		// 404 NOT FOUND
+		c.status(404);
+		return c.json({ message: 'Project not found' });
+	}
+
+	projects.splice(index, 1);
+
+	// 200 OK
+	c.status(200);
+	return c.json({ message: 'Project deleted successfully' });
+});
+
 // POST endpoint to add a new project
 app.post('/api/projects', async (c) => {
 	const body: ProjectFormData = await c.req.json();
