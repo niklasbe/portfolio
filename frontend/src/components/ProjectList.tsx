@@ -21,7 +21,7 @@ const ProjectList = () => {
             });
     }, []);
 
-    const handleFetch = async (newProjectData: ProjectFormData) => {
+    const handlePOSTRequest = async (newProjectData: ProjectFormData) => {
         try {
             const response = await fetch('http://localhost:3000/api/projects', {
                 method: 'POST',
@@ -59,7 +59,7 @@ const ProjectList = () => {
                     ))}
                 </div>
                 {
-                    <ProjectForm onAddProject={handleFetch} />
+                    <ProjectForm onAddProject={handlePOSTRequest} />
                 }
             </div>
         </div>
