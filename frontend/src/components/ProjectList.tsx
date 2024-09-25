@@ -35,6 +35,7 @@ const ProjectList = () => {
             }
             // If the response is OK, remove the project from the state
             setProjects(prevProjects => prevProjects.filter(project => project.id !== id));
+            console.log(data);
 
         } catch (error) {
             console.error(error);
