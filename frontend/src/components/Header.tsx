@@ -53,16 +53,27 @@ function ContactForm() {
     )
 }
 
+function ExperienceList({ experiences }: { experiences: { title: string }[] }) {
+    if (experiences.length === 0) {
+        return <p className="text-gray-50">No experience found</p>;
+    }
+    return (
+        <>
+            {experiences.map((experience, index) => (
+                <div key={index} className="bg-zinc-800 p-3 rounded-md">
+                    <p className="text-sm font-medium text-gray-50">{experience.title}</p>
+                </div>
+            ))}
+        </>
+    )
+}
+
 function Experience({ experiences }: { experiences: { title: string }[] }) {
     return (
         <div className="p-4 rounded-md">
             <h2 className="text-2xl font-semibold text-gray-50 mb-4">Experience</h2>
             <div className="space-y-2 max-h-[300px] overflow-y-auto">
-                {experiences.map((experience, index) => (
-                    <div key={index} className="bg-zinc-800 p-3 rounded-md">
-                        <p className="text-sm font-medium text-gray-50">{experience.title}</p>
-                    </div>
-                ))}
+                <ExperienceList experiences={experiences} />
             </div>
         </div>
     )
