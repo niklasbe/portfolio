@@ -5,6 +5,9 @@
  * @param {string} createdAt - Project creation date
  * @param {string} description - Project description
  * @param {string[]} technologies - Project technologies
+ * @param {string} publishedAt - Project publication date
+ * @param {boolean} public - Project visibility
+ * @param {string} status - Project status (e.g. "hidden", "published", "draft", "deleted")
  */
 export type Project = {
     id: string;
@@ -12,6 +15,9 @@ export type Project = {
     createdAt: string;
     description: string;
     technologies: string[];
+    publishedAt?: string;
+    public: boolean;
+    status: string;
 };
 
 /**

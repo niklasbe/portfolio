@@ -4,8 +4,10 @@ import { cors } from "hono/cors"
 import { Project, ProjectFormData } from "@shared/types";
 import projects from "./projects.json";
 
+import { databaseFile } from "./config";
 
-
+const Database = require('better-sqlite3');
+const db = new Database(databaseFile, { verbose: console.log });
 
 
 const app = new Hono();
@@ -16,7 +18,16 @@ app.use("/*", cors());
 app.get("/", (c) => c.text("Hello, World!"));
 
 // GET endpoint to retrieve all projects
-app.get("/api/projects", (c) => c.json(projects));
+//app.get("/api/projects", (c) => c.json(projects));
+app.get("/api/projects", (c) => {
+	const projects: Project[] = db.prepare('SELECT * FROM projects').all().map((row: any) => ({
+		...row,
+		technologies: JSON.parse(row.technologies),
+		public: Boolean(row.public)
+	}));
+
+	return c.json(projects);
+});
 
 // DELETE endpoint to delete a project by ID
 app.delete("/api/projects/:id", (c) => {
@@ -56,7 +67,9 @@ app.post('/api/projects', async (c) => {
 		title: body.title as string,
 		createdAt: new Date().toISOString(),
 		description: body.description as string,
-		technologies
+		technologies: technologies,
+		public: false,
+		status: 'draft'
 	};
 
 	// Add project to projects array
