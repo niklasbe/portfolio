@@ -9,7 +9,7 @@ import { ProjectFormData } from './ProjectListForm';
 
 const ProjectFlexbox = ({ projects, onDelete }: { projects: Project[], onDelete: (id: string) => void }) => {
     if (projects.length === 0) {
-        return <p className="flex-grow text-lg text-gray-50">No projects found</p>;
+        return <p className="flex-grow text-lg">No projects found</p>;
     }
 
     return (
@@ -88,7 +88,7 @@ const ProjectList = () => {
     };
     return (
         <div className="container mx-auto px-4 py-12 rounded-lg shadow-lg ">
-            <h1 className="text-3xl font-bold text-gray-50 mb-8">My Projects</h1>
+            <h1 className="text-3xl font-bold mb-8">My Projects</h1>
             <div className="flex flex-col xl:flex-row gap-6">
                 <ProjectFlexbox projects={projects} onDelete={onDelete} />
 

@@ -18,8 +18,10 @@ app.use("/*", cors());
 app.get("/", (c) => c.text("Hello, World!"));
 
 // GET endpoint to retrieve all projects
-//app.get("/api/projects", (c) => c.json(projects));
 app.get("/api/projects", (c) => {
+	// Fetch all projects from the database
+	// The technologies are stored as a JSON string in the database, so we need to parse them
+	// and return them as an array in the response.
 	const projects: Project[] = db.prepare('SELECT * FROM projects').all().map((row: any) => ({
 		...row,
 		technologies: JSON.parse(row.technologies),

@@ -58,15 +58,15 @@ function ProjectForm({ onAddProject }: ProjectFormProps) {
         <>
             {/* Form to add a new project */}
             <div className="xl:w-1/4">
-                <form className="bg-zinc-800 shadow-md rounded-lg p-6" onSubmit={handleSubmit}>
-                    <h2 className="text-2xl font-bold text-gray-50 mb-4">Add New Project</h2>
+                <form className="shadow-lg rounded-lg p-6" onSubmit={handleSubmit}>
+                    <h2 className="text-2xl font-bold mb-4">Add New Project</h2>
                     <div className="mb-4">
-                        <label className="block text-gray-200 text-sm font-bold mb-2" htmlFor="form-title">
+                        <label className="block text-sm font-bold mb-2" htmlFor="form-title">
                             Name
                         </label>
                         <input
                             name="title"
-                            className="shadow appearance-none border border-gray-700 rounded w-full py-2 px-3 bg-zinc-700 text-gray-200 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
+                            className="shadow appearance-none border rounded w-full py-2 px-3 bg-gray-100  leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
                             id="form-title"
                             value={formData.title}
                             onChange={handleInputChange}
@@ -76,12 +76,12 @@ function ProjectForm({ onAddProject }: ProjectFormProps) {
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-gray-200 text-sm font-bold mb-2" htmlFor="form-description">
+                        <label className="block  text-sm font-bold mb-2" htmlFor="form-description">
                             Description
                         </label>
                         <textarea
                             name="description"
-                            className="shadow appearance-none border border-gray-700 rounded w-full py-2 px-3 bg-zinc-700 text-gray-200 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
+                            className="shadow appearance-none border rounded w-full py-2 px-3 bg-gray-100 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
                             value={formData.description}
                             onChange={handleInputChange}
                             id="form-description"
@@ -90,12 +90,12 @@ function ProjectForm({ onAddProject }: ProjectFormProps) {
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-gray-200 text-sm font-bold mb-2" htmlFor="form-technologies">
+                        <label className="block text-sm font-bold mb-2" htmlFor="form-technologies">
                             Technologies
                         </label>
                         <input
                             name="technologies"
-                            className="shadow appearance-none border border-gray-700 rounded w-full py-2 px-3 bg-zinc-700 text-gray-200 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
+                            className="shadow appearance-none border rounded w-full py-2 px-3 bg-gray-100  leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
                             value={formData.technologies}
                             onChange={handleInputChange}
                             id="form-technologies"

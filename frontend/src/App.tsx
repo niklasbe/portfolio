@@ -22,7 +22,7 @@ const student = {
 
 function App() {
 	return (
-		<div className='bg-zinc-900 min-h-screen'>
+		<div className='min-h-screen'>
 			<Header {...student} />
 			<ProjectList />
 			<ResourceBox />
