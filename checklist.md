@@ -6,7 +6,7 @@
 - [ ] Create configuration file for URLs
 - [ ] Abstract libraries into service/util files
 - [ ] Implement Zod validation for project data
-- [#] Extend project data with new fields (`publishedAt`, `public`, `status`, tags)
+- [x] Extend project data with new fields (`publishedAt`, `public`, `status`, tags)
 - [ ] Use `date-fns` for date formatting in frontend
 - [ ] Create dedicated `ProjectPage` component
 - [ ] Create reusable `Layout.tsx` component
@@ -20,11 +20,11 @@
 - [ ] Implement Zod validation for server-side data
 - [ ] Ensure consistent API responses
 - [ ] Implement CRUD functionality for projects:
-  - [ ] Create new projects
-  - [ ] Read all projects
-  - [ ] Read one specific project
+  - [x] Create new projects
+  - [x] Read all projects
+  - [x] Read one specific project
   - [ ] Update existing projects
-  - [ ] Delete projects
+  - [x] Delete projects
 - [ ] Create and manage relations between projects and other data
 
 ## Testing
